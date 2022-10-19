@@ -15,7 +15,11 @@ class Lexer
         while ($pos < strlen($code)) {
             $char = $code[$pos];
             switch ($char) {
-                case '(': 
+            case '(': 
+                    if ($curent !== '') {
+                        $result[] = new Token(TokenKind::Keyword, $curent, $line);
+                        $curent = '';
+                    }
                     $result[] = new Token(TokenKind::Open, '(', $line);
                     break;
                 case ')':

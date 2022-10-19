@@ -34,7 +34,7 @@ class Parser
         ;
     }
 
-    public function parseKeyword(): KeywordNode
+    public function parseKeyword(): ?KeywordNode
     {
         if ($this->tokens->curent()?->kind != TokenKind::Keyword) {
             return null;
@@ -70,9 +70,9 @@ class Parser
         }
 
         $name = $this->tokens->curent();
+        $this->tokens->move(2);
 
         $children = [];
-        $this->tokens->move();
         while ($this->tokens->curent()?->kind !== TokenKind::Close) {
             $children[] = $this->parseToken();
             $this->tokens->move();
