@@ -13,6 +13,7 @@ class UserFunction extends FunctionNode
     {
         $function = 
             $analyzer->getConstant($this->name) 
+            ?? $analyzer->getVariable($this->name)
             ?? throw new ParseError('Unknown constant '.$this->name)
         ;
 

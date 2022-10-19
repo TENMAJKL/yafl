@@ -1,7 +1,0 @@
-<?php
-
-namespace Majkel\Yafl\Nodes;
-
-class KeywordNode
-{
-}
