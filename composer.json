@@ -1,0 +1,9 @@
+{
+    "name": "majkel/yafl",
+    "autoload": {
+        "psr-4": {
+            "Majkel\\Yafl\\": "src/"
+        }
+    },
+    "require": {}
+}
