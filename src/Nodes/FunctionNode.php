@@ -2,7 +2,7 @@
 
 namespace Majkel\Yafl\Nodes;
 
-class FunctionNode implements Node
+abstract class FunctionNode implements Node
 {
     public function __construct(
         public readonly string $name,
@@ -10,5 +10,12 @@ class FunctionNode implements Node
         public readonly array $children,
     ) {
 
+    }
+
+    public function isStatement(): bool
+    {
+        return in_array($this->name, [
+            '$', // 'data',
+        ]);
     }
 }

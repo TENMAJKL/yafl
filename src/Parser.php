@@ -3,6 +3,7 @@
 namespace Majkel\Yafl;
 
 use Majkel\Yafl\Nodes\{StringNode, NumberNode, FunctionNode, KeywordNode, Node};
+use Majkel\Yafl\Nodes\Functions;
 use ParseError;
 
 class Parser
@@ -40,7 +41,10 @@ class Parser
             return null;
         }
 
-        return new KeywordNode($this->tokens->curent()->content);
+        $keyword = explode(':', $this->tokens->curent()->content);
+        $name = $keyword[0];
+        $type = Type::fromString($keyword[1] ?? null);
+        return new KeywordNode($name, $type);
     }
 
     public function parseString(): ?StringNode
@@ -78,6 +82,16 @@ class Parser
             $this->tokens->move();
         }
 
-        return new FunctionNode($name->content, $children);
+        return new ($this->getFunction($name->content))($name->content, $children);
+    }
+
+    public function getFunction(string $name): string
+    {
+        return match ($name) {
+            '$', 'define', 'let' => Functions\Definition::class,
+            '\\', 'lambda', 'λ' => Functions\Lambda::class,
+            '+', '-', '/', '*', '%' => Functions\Math::class,
+            default => Functions\UserFunction::class
+        };
     }
 }

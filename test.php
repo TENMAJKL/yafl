@@ -1,10 +1,15 @@
 <?php
 
 use Majkel\Yafl\{Lexer, Parser};
+use Majkel\Yafl\Analyzer;
 
 include __DIR__.'/vendor/autoload.php';
 
 $lexer = new Lexer();
-$tokens = $lexer->lex('f(main \(x x))');
+$tokens = $lexer->lex('
+$(add \(x:int \(y:int +(x y))))
+$(entry "parek")
+');
 $parser = new Parser($tokens);
-print_r($parser->parse());
+$analyzer = new Analyzer();
+$analyzer->analyze($parser->parse());
