@@ -15,6 +15,14 @@ class UserFunction extends FunctionNode
             $analyzer->getConstant($this->name) 
             ?? throw new ParseError('Unknown constant '.$this->name)
         ;
-        // this will be harder lol        
+
+        foreach ($this->children as $argument) {
+            if (($function->body[0] ?? null)?->type != $argument->analyze($analyzer)->type) {
+                throw new ParseError('Unexpected type');
+            }
+            $function = $function->body[1];
+        }
+
+        return $function;
     }
 }

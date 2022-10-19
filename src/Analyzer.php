@@ -56,7 +56,7 @@ class Analyzer
         return $this;
     }
 
-    public function getType(string $name): ?Type
+    public function getVariable(string $name): ?Type
     {
         return $this->variables[$name] ?? null;
     }

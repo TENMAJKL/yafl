@@ -19,7 +19,7 @@ class KeywordNode implements Node
     public function analyze(Analyzer $analyzer): Type
     { 
         return 
-            $analyzer->getType($this->content)
+            $analyzer->getVariable($this->content)
             ?? throw new ParseError('Undefined variable '.$this->content)
         ;
     }
