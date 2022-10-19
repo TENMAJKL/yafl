@@ -89,6 +89,7 @@ class Parser
     {
         return match ($name) {
             '$', 'define', 'let' => Functions\Definition::class,
+            '@', 'type' => Functions\TypeDefinition::class,
             '\\', 'lambda', 'λ' => Functions\Lambda::class,
             '+', '-', '/', '*', '%' => Functions\Math::class,
             default => Functions\UserFunction::class

@@ -57,6 +57,12 @@ class Analyzer
         return $this;
     }
 
+    public function collect(): static
+    {
+        $this->variables = [];
+        return $this;
+    }
+
     public function getVariable(string $name): ?Type
     {
         return $this->variables[$name] ?? null;

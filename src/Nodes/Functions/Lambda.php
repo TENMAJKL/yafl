@@ -21,8 +21,8 @@ class Lambda extends FunctionNode
             throw new ParseError('Expected type for lambda parameter');
         }
 
-        if (!isset($this->children[1])) {
-            throw new ParseError('Expected second argument');
+        if (!isset($this->children[2])) {
+            throw new ParseError('Expected third argument');
         }
 
         $analyzer->addVariable($this->children[0]->content, $this->children[0]->type);
