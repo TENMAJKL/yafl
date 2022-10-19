@@ -51,6 +51,7 @@ class Lexer
                 case ';':
                     do {
                         $pos++;
+                        $char = $code[$pos];
                     } while ($char != "\n");
                     break;     
                 case '"':
@@ -72,7 +73,7 @@ class Lexer
                         $curent .= $char; 
                     } else if (is_numeric($curent)) {
                         throw new ParseError('Unexpected char '.$char);
-                    } else if ($result[count($result) - 1]->kind == TokenKind::Open) {
+                    } else {
                         $curent .= $char;
                     }
             }

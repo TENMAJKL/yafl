@@ -2,7 +2,7 @@
 
 namespace Majkel\Yafl;
 
-use Majkel\Yafl\Nodes\{StringNode, NumberNode, FunctionNode, Node};
+use Majkel\Yafl\Nodes\{StringNode, NumberNode, FunctionNode, KeywordNode, Node};
 use ParseError;
 
 class Parser
@@ -29,8 +29,18 @@ class Parser
             $this->parseString() 
             ?? $this->parseNumber() 
             ?? $this->parseFunction()
+            ?? $this->parseKeyword()
             ?? throw new ParseError('Unexpected token '.$this->tokens->curent()?->content)
         ;
+    }
+
+    public function parseKeyword(): KeywordNode
+    {
+        if ($this->tokens->curent()?->kind != TokenKind::Keyword) {
+            return null;
+        }
+
+        return new KeywordNode($this->tokens->curent()->content);
     }
 
     public function parseString(): ?StringNode
@@ -53,14 +63,13 @@ class Parser
 
     public function parseFunction(): ?FunctionNode
     {
-        if ($this->tokens->curent()?->kind != TokenKind::Open) {
+        if ($this->tokens->curent()?->kind != TokenKind::Keyword
+            || $this->tokens->peek()?->kind != TokenKind::Open
+        ) {
             return null;
         }
 
-        $name = $this->tokens->move();
-        if ($name->kind != TokenKind::Keyword) {
-            throw new ParseError('Expected name of function after (');
-        }
+        $name = $this->tokens->curent();
 
         $children = [];
         $this->tokens->move();
