@@ -28,7 +28,6 @@ class UserFunction extends FunctionNode
                 $type->setGeneric($argument->analyze($analyzer));
             }
 
-
             if ($type->type != $argument->analyze($analyzer)->type) {
                 throw new ParseError('Unexpected type');
             }

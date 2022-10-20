@@ -6,3 +6,4 @@ yet another functional language
 
 - structures
 - new name
+- lazy evaluation

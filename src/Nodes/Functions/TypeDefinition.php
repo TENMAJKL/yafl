@@ -32,7 +32,7 @@ class TypeDefinition extends FunctionNode
             $type = $child->type;
             if ($type->type == BaseType::GenericType) {
                 if (!isset($generics[$type->name])) {
-                    $generics[$result->name] = $type;               
+                    $generics[$type->name] = $type;               
                 }
 
                 $type = $generics[$type->name];
