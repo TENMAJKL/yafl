@@ -4,16 +4,14 @@ use Majkel\Yafl\{Lexer, Parser, Analyzer, Generator};
 
 include __DIR__.'/vendor/autoload.php';
 
+$name = $argv[1] ?? throw new Exception('file does not exist');
+
 $lexer = new Lexer();
-$tokens = $lexer->lex('
-$(add @(x:int y:int int) +(x y))
-$(fac @(x:int int) if(==(x 0) 1 fac(-(x 1))))
-$(parek @(int) 10);
-$(entry @(int) fac(parek()))
-');
+$tokens = $lexer->lex(file_get_contents($name));
 $parser = new Parser($tokens);
 $nodes = $parser->parse();
 $analyzer = new Analyzer();
 $analyzer->analyze($nodes);
 $generator = new Generator();
-echo $generator->generate($nodes);
+$result = $generator->generate($nodes);
+file_put_contents(explode('.', $name)[0].'.js', $result);

@@ -1,0 +1,8 @@
+$(fac @(x:int int) 
+    if(==(x 0)
+        1
+        *(x fac(-(x 1)))
+    )
+)
+
+$(entry @(int) fac(5))

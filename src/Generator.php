@@ -14,7 +14,7 @@ class Generator
             $result .= $node->print();
         }
 
-        $result .= 'console.log(entry(read_line()))';
+        $result .= 'console.log(entry())';
 
         return $result;
     }
