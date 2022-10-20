@@ -18,4 +18,9 @@ class StringNode implements Node
     {
         return new Type(BaseType::String);
     }
+
+    public function print(): string
+    {
+        return '"'.$this->value.'"';
+    }
 }

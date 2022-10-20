@@ -25,4 +25,12 @@ class Type
             default => new self(BaseType::GenericType, $type),
         };
     }
+
+    public static function getLambdaReturn(self $type): self
+    {
+        if ($type->type == BaseType::Lambda) {
+            return self::getLambdaReturn($type->body[1]);
+        }
+        return $type;
+    }
 }

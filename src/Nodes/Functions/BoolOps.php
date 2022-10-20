@@ -8,7 +8,7 @@ use Majkel\Yafl\Nodes\FunctionNode;
 use Majkel\Yafl\Type;
 use ParseError;
 
-class Math extends FunctionNode
+class BoolOps extends FunctionNode
 {
     public function analyze(Analyzer $analyzer): Type
     {
@@ -20,11 +20,13 @@ class Math extends FunctionNode
             throw new ParseError('Expected number as second argument');
         }
 
-        return new Type(BaseType::Int);
+        return new Type(BaseType::Bool);
     }
 
     public function print(): string
     {
-        return $this->children[0]->print().' '.$this->name.' '.$this->children[1]->print();
+        $op = $this->name;
+        $op = $op == '/=' ? '!=' : $op;
+        return $this->children[0]->print().' '.$op.' '.$this->children[1]->print();
     }
 }

@@ -18,7 +18,7 @@ class TypeDefinition extends FunctionNode
             throw new ParseError('Expected return type as first argument');
         }
 
-        $result = Type::fromString($this->children[0]->content);
+        $result = Type::fromString($children[0]->content);
 
         foreach (array_slice($children, 1) as $child) {
             if ($child->type == null) {
@@ -29,5 +29,19 @@ class TypeDefinition extends FunctionNode
         }
         
         return $result;
+    }
+
+    public function print(): string
+    {
+        $args = '';
+        foreach (array_slice($this->children, 0, -1) as $child) {
+            $args .= '('.$child->content.') => ';
+        }
+
+        if (!$args) {
+            $args = '() => ';
+        }
+
+        return $args;
     }
 }

@@ -92,6 +92,8 @@ class Parser
             '@', 'type' => Functions\TypeDefinition::class,
             '\\', 'lambda', 'λ' => Functions\Lambda::class,
             '+', '-', '/', '*', '%' => Functions\Math::class,
+            '==', '/=', '!=', '<=', '>=', '<', '>' => Functions\BoolOps::class,
+            'if', 'branch', '=<' => Functions\Branch::class,
             default => Functions\UserFunction::class
         };
     }

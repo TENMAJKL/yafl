@@ -20,15 +20,22 @@ class Definition extends FunctionNode
         if (($type = ($this->children[1] ?? null)->analyze($analyzer)) == null) {
             throw new ParseError('Expected type as second argument');
         }
-        print_r($this->children);
+
         if (!isset($this->children[2])) {
             throw new ParseError('Expected body as third argument');
         }
 
         $analyzer->addConstant($this->children[0]->content, $type);
-        $this->children[2]->analyze($analyzer);
+        if ($this->children[2]->analyze($analyzer)->type != Type::getLambdaReturn($type)->type) {
+            throw new ParseError('Constant '.$this->children[0]->content.' has diffenet type than its definition');
+        }
         $analyzer->collect();
 
         return new Type(BaseType::Void);
+    }
+
+    public function print(): string
+    {
+        return 'const '.$this->children[0]->print().' = '.$this->children[1]->print().$this->children[2]->print()."\n";
     }
 }

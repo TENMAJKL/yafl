@@ -10,4 +10,5 @@ enum BaseType
     case GenericType;
     case Data;
     case Void;
+    case Bool;
 }

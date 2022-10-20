@@ -26,4 +26,13 @@ class UserFunction extends FunctionNode
 
         return $function;
     }
+
+    public function print(): string
+    {
+        $args = '';
+        foreach ($this->children as $child) {
+            $args .= '('.$child->print().')';
+        }
+        return $this->name.$args;
+    }
 }

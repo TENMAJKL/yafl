@@ -3,7 +3,6 @@
 namespace Majkel\Yafl\Nodes;
 
 use Majkel\Yafl\Analyzer;
-use Majkel\Yafl\BaseType;
 use Majkel\Yafl\Type;
 use ParseError;
 
@@ -22,5 +21,10 @@ class KeywordNode implements Node
             $analyzer->getVariable($this->content)
             ?? throw new ParseError('Undefined variable '.$this->content)
         ;
+    }
+
+    public function print(): string
+    {
+        return $this->content;
     }
 }

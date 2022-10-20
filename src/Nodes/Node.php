@@ -8,4 +8,6 @@ use Majkel\Yafl\Type;
 interface Node
 {
     public function analyze(Analyzer $analyzer): Type;
+
+    public function print(): string;
 }

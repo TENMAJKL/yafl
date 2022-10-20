@@ -21,8 +21,8 @@ class Lambda extends FunctionNode
             throw new ParseError('Expected type for lambda parameter');
         }
 
-        if (!isset($this->children[2])) {
-            throw new ParseError('Expected third argument');
+        if (!isset($this->children[1])) {
+            throw new ParseError('Expected second argument');
         }
 
         $analyzer->addVariable($this->children[0]->content, $this->children[0]->type);
@@ -34,5 +34,10 @@ class Lambda extends FunctionNode
         $analyzer->free($this->children[0]->content);
 
         return $type;
+    }
+
+    public function print(): string
+    {
+        return '('.$this->children[0]->print().') => '.$this->children[1]->print();
     }
 }

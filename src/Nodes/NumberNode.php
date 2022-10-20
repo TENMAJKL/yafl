@@ -18,4 +18,9 @@ class NumberNode implements Node
     {
         return new Type(BaseType::Int);
     }
+
+    public function print(): string
+    {
+        return (string) $this->value;
+    }
 }
