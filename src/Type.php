@@ -8,12 +8,20 @@ namespace Majkel\Yafl;
 class Type
 {
     public function __construct(
-        public readonly BaseType $type,
-        public readonly ?string $name = null,
+        public BaseType $type,
+        public ?string $name = null,
         /** @var array<self> $body */
-        public readonly ?array $body = null
+        public ?array $body = null
     ) {
 
+    }
+
+    public function setGeneric(self $new): static    
+    {
+        foreach ($new as $propery => $value) {
+            $this->{$propery} = $value;
+        }
+        return $this;
     }
 
     public static function fromString(?string $type): ?self
@@ -33,4 +41,5 @@ class Type
         }
         return $type;
     }
+
 }

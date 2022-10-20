@@ -18,16 +18,30 @@ class TypeDefinition extends FunctionNode
             throw new ParseError('Expected return type as first argument');
         }
 
+        $generics = [];
         $result = Type::fromString($children[0]->content);
+        if ($result->type == BaseType::GenericType) {
+            $generics[$result->name] = $result;
+        }
 
         foreach (array_slice($children, 1) as $child) {
             if ($child->type == null) {
                 throw new ParseError('Missing type definition at argument '.$child->name);
             }
-            $analyzer->addVariable($child->content, $child->type);
-            $result = new Type(BaseType::Lambda, null, [$child->type, $result]);
+
+            $type = $child->type;
+            if ($type->type == BaseType::GenericType) {
+                if (!isset($generics[$type->name])) {
+                    $generics[$result->name] = $type;               
+                }
+
+                $type = $generics[$type->name];
+            }
+
+            $analyzer->addVariable($child->content, $type);
+            $result = new Type(BaseType::Lambda, null, [$type, $result]);
         }
-        
+ 
         return $result;
     }
 

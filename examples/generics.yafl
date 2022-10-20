@@ -1,0 +1,2 @@
+$(parek @(x:a a) x)
+$(entry @(string) parek("cs"))
