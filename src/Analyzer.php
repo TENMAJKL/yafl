@@ -19,6 +19,11 @@ class Analyzer
     private array $constants = [];
 
     /**
+     * @var array<string, Type> $structures
+     */
+    private array $structures = [];
+
+    /**
      * @param array<Node> $tree
      */
     public function analyze(array $tree): void
@@ -34,7 +39,7 @@ class Analyzer
         if (!isset($this->constants['entry'])) {
             throw new ParseError('Missing entry constant');
         }
-        
+        print_r($this->structures); 
     }
 
     public function addConstant(string $name, Type $type): static
@@ -48,6 +53,12 @@ class Analyzer
     {
         $this->variables[$name] = $type;
 
+        return $this;
+    }
+
+    public function addStructure(string $name, Type $type): static
+    {
+        $this->structures[$name] = $type;
         return $this;
     }
 
@@ -72,4 +83,9 @@ class Analyzer
     {
         return $this->constants[$name] ?? null;
     }
+ 
+    public function getStructure(string $name): ?Type
+    {
+        return $this->structures[$name] ?? null;
+    }   
 }

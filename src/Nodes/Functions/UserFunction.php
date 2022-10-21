@@ -38,11 +38,11 @@ class UserFunction extends FunctionNode
         return $function;
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
         $args = '';
         foreach ($this->children as $child) {
-            $args .= '('.$child->print().')';
+            $args .= '('.$child->print($analyzer).')';
         }
         return $this->name.$args;
     }

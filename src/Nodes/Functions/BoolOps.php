@@ -23,10 +23,10 @@ class BoolOps extends FunctionNode
         return new Type(BaseType::Bool);
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
         $op = $this->name;
         $op = $op == '/=' ? '!=' : $op;
-        return $this->children[0]->print().' '.$op.' '.$this->children[1]->print();
+        return $this->children[0]->print($analyzer).' '.$op.' '.$this->children[1]->print($analyzer);
     }
 }

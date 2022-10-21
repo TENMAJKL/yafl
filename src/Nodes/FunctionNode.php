@@ -15,7 +15,7 @@ abstract class FunctionNode implements Node
     public function isStatement(): bool
     {
         return in_array($this->name, [
-            '$', // 'data',
+            '$', 'data',
         ]);
     }
 }

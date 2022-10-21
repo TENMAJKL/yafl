@@ -9,5 +9,5 @@ interface Node
 {
     public function analyze(Analyzer $analyzer): Type;
 
-    public function print(): string;
+    public function print(Analyzer $analyzer): string;
 }

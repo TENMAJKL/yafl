@@ -19,7 +19,7 @@ class NumberNode implements Node
         return new Type(BaseType::Int);
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
         return (string) $this->value;
     }

@@ -27,8 +27,8 @@ class Branch extends FunctionNode
         return $type;
     }   
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
-        return $this->children[0]->print().' ? '.$this->children[1]->print().' : '.$this->children[2]->print();
+        return $this->children[0]->print($analyzer).' ? '.$this->children[1]->print($analyzer).' : '.$this->children[2]->print($analyzer);
     } 
 }

@@ -23,8 +23,8 @@ class Math extends FunctionNode
         return new Type(BaseType::Int);
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
-        return $this->children[0]->print().' '.$this->name.' '.$this->children[1]->print();
+        return $this->children[0]->print($analyzer).' '.$this->name.' '.$this->children[1]->print($analyzer);
     }
 }

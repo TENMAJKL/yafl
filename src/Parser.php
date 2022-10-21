@@ -43,7 +43,7 @@ class Parser
 
         $keyword = explode(':', $this->tokens->curent()->content);
         $name = $keyword[0];
-        $type = Type::fromString($keyword[1] ?? null);
+        $type = $keyword[1] ?? null;
         return new KeywordNode($name, $type);
     }
 
@@ -94,6 +94,8 @@ class Parser
             '+', '-', '/', '*', '%' => Functions\Math::class,
             '==', '/=', '!=', '<=', '>=', '<', '>' => Functions\BoolOps::class,
             'if', 'branch', '=<' => Functions\Branch::class,
+            'data' => Functions\Data::class,
+            'constructor', '|' => Functions\Constructor::class,
             default => Functions\UserFunction::class
         };
     }

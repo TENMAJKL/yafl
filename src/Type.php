@@ -24,13 +24,15 @@ class Type
         return $this;
     }
 
-    public static function fromString(?string $type): ?self
+    public static function fromString(?string $type, Analyzer $analyzer): ?self
     {
         return match ($type) {
             'string' => new self(BaseType::String),
             'int' => new self(BaseType::Int),
             null => null,
-            default => new self(BaseType::GenericType, $type),
+            default => 
+                $analyzer->getStructure($type) 
+                ?? new self(BaseType::GenericType, $type),
         };
     }
 

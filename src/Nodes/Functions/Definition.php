@@ -34,8 +34,8 @@ class Definition extends FunctionNode
         return new Type(BaseType::Void);
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
-        return 'const '.$this->children[0]->print().' = '.$this->children[1]->print().$this->children[2]->print()."\n";
+        return 'const '.$this->children[0]->print($analyzer).' = '.$this->children[1]->print($analyzer).$this->children[2]->print($analyzer)."\n";
     }
 }

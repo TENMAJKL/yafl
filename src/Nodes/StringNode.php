@@ -19,7 +19,7 @@ class StringNode implements Node
         return new Type(BaseType::String);
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
         return '"'.$this->value.'"';
     }

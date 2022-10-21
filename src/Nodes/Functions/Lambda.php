@@ -13,21 +13,24 @@ class Lambda extends FunctionNode
 {
     public function analyze(Analyzer $analyzer): Type
     {
-        if (!(($this->children[0] ?? null) instanceof KeywordNode)) {
+        if (!(($arg = $this->children[0] ?? null) instanceof KeywordNode)) {
             throw new ParseError('Expected argument name as first argument');
         }
 
-        if (!$this->children[0]->type) {
+        /** @var KeywordNode $arg */
+
+        $fn_type = $arg->getType();
+        if (!$fn_type) {
             throw new ParseError('Expected type for lambda parameter');
         }
 
         if (!isset($this->children[1])) {
             throw new ParseError('Expected second argument');
         }
-
-        $analyzer->addVariable($this->children[0]->content, $this->children[0]->type);
+        
+        $analyzer->addVariable($arg->content, $fn_type);
         $type = new Type(BaseType::Lambda, null, [
-            $this->children[0]->type,
+            $fn_type,
             $this->children[1]->analyze($analyzer)
         ]);
 
@@ -36,8 +39,8 @@ class Lambda extends FunctionNode
         return $type;
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
-        return '('.$this->children[0]->print().') => '.$this->children[1]->print();
+        return '('.$this->children[0]->print($analyzer).') => '.$this->children[1]->print($analyzer);
     }
 }

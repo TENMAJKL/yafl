@@ -13,5 +13,5 @@ $nodes = $parser->parse();
 $analyzer = new Analyzer();
 $analyzer->analyze($nodes);
 $generator = new Generator();
-$result = $generator->generate($nodes);
+$result = $generator->generate($nodes, $analyzer);
 file_put_contents(explode('.', $name)[0].'.js', $result);

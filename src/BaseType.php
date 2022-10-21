@@ -9,6 +9,7 @@ enum BaseType
     case Lambda;
     case GenericType;
     case Data;
+    case Constructor;
     case Void;
     case Bool;
 }

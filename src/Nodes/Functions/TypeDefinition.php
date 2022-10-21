@@ -19,17 +19,16 @@ class TypeDefinition extends FunctionNode
         }
 
         $generics = [];
-        $result = Type::fromString($children[0]->content);
+        $result = Type::fromString($children[0]->content, $analyzer);
         if ($result->type == BaseType::GenericType) {
             $generics[$result->name] = $result;
         }
 
         foreach (array_slice($children, 1) as $child) {
-            if ($child->type == null) {
+            if (($type = $child->getType($analyzer)) == null) {
                 throw new ParseError('Missing type definition at argument '.$child->name);
             }
 
-            $type = $child->type;
             if ($type->type == BaseType::GenericType) {
                 if (!isset($generics[$type->name])) {
                     $generics[$type->name] = $type;               
@@ -45,7 +44,7 @@ class TypeDefinition extends FunctionNode
         return $result;
     }
 
-    public function print(): string
+    public function print(Analyzer $analyzer): string
     {
         $args = '';
         foreach (array_slice($this->children, 0, -1) as $child) {
