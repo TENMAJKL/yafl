@@ -13,6 +13,19 @@ class Constructor extends FunctionNode
 {
     public function analyze(Analyzer $analyzer): Type
     {
+        throw new ParseError('Data constructor can be only in data definition');
+    }
+
+    public function print(Analyzer $analyzer): string
+    {
+        return '';
+    }
+
+    /**
+     * This allows us to have constructor only in data along with recursive data strucutures
+     */
+    public function analyzeReal(Analyzer $analyzer, Type $self): Type
+    {
         $construct = [];
         if (!(($name = $this->children[0] ?? null) instanceof KeywordNode)) {
             throw new ParseError('Expected constructor name as first argument');
@@ -22,15 +35,15 @@ class Constructor extends FunctionNode
             if (!($child instanceof KeywordNode)) {
                 throw new ParseError('Unexpected token, expected type definition');
             }
-            $type = $child->getType($analyzer);
-            $construct[$child->content] = $type; 
+            $type = 
+                $child->content == $self->name 
+                ? $type = $self
+                : $type = Type::fromString($child->content, $analyzer)
+            ;
+        
+            $construct[] = $type; 
         }
 
         return new Type(BaseType::Constructor, $name->content, $construct);
-    }
-
-    public function print(Analyzer $analyzer): string
-    {
-        return '';
     }
 }

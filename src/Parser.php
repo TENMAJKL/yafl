@@ -96,6 +96,7 @@ class Parser
             'if', 'branch', '=<' => Functions\Branch::class,
             'data' => Functions\Data::class,
             'constructor', '|' => Functions\Constructor::class,
+            'new' => Functions\NewStructure::class,
             default => Functions\UserFunction::class
         };
     }

@@ -1,3 +1,4 @@
-data(Maybe |(Just value:a) |(Nothing)) ; remove named values
-data(List |(EmptyList) |(List head:a tail:List)) ; tbd it uses List as generic type
-$(entry @(string) "cus svet")
+data(Maybe |(Just a) |(Nothing))
+data(List |(EmptyList) |(List a List))
+data(Parek |(Parek string))
+$(entry @(List) new(List:List "cs" new(List:List "parek" new(List:EmptyList))))

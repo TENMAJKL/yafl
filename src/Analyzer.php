@@ -39,7 +39,6 @@ class Analyzer
         if (!isset($this->constants['entry'])) {
             throw new ParseError('Missing entry constant');
         }
-        print_r($this->structures); 
     }
 
     public function addConstant(string $name, Type $type): static

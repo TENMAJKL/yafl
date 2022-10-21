@@ -17,15 +17,15 @@ class Data extends FunctionNode
             throw new ParseError('Expected structure name as first argument');
         }
 
-        $struct = [];
+        $struct = new Type(BaseType::Data, $name->content, []);
         foreach (array_slice($this->children, 1) as $constructor) {
-            if (($type = $constructor->analyze($analyzer))->type != BaseType::Constructor) {
+            if (!($constructor instanceof Constructor)) {
                 throw new ParseError('Unexpected token, expected constructor');
             }
-            $struct[$type->name] = $type;
+            $type = $constructor->analyzeReal($analyzer, $struct);
+            $struct->body[$type->name] = $type;
         }
 
-        $struct = new Type(BaseType::Data, $name->content, $struct);
         $analyzer->addStructure($name->content, $struct);
         return new Type(BaseType::Void);
     }

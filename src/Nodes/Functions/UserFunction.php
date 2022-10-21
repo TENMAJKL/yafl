@@ -18,8 +18,6 @@ class UserFunction extends FunctionNode
             ?? throw new ParseError('Unknown constant '.$this->name)
         ;
 
-        $generics = [];
-
         foreach ($this->children as $argument) {
 
             $type = $function->body[0];
